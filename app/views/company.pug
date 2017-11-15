@@ -1,0 +1,27 @@
+extends layout
+block content
+  h2 Company Information
+  br
+  table.table.table-bordered
+    thead.thead(style='background-color: #101082; color: white;')
+      tr
+        th(scope='col') #
+        th(scope='col') Company Code
+        th(scope='col') Company Group
+        th(scope='col') Tax ID
+        th(scope='col') Name Thai
+        th(scope='col') Name English
+        th(scope='col') Business Type
+        th(scope='col')
+
+    - for(var x=0;x<company.length;x++)
+      tr
+        td #{x+1}
+        td #{company[x].CompanyCode}
+        td #{company[x].CompanyGroup}
+        td #{company[x].TaxID}
+        td #{company[x].NameThai}
+        td #{company[x].NameEnglish}
+        td #{company[x].BusinessType}
+        td
+          a.btn.btn-primary(href='/companys/info/'+company[x]._id) Info

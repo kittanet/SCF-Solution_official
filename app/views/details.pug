@@ -1,0 +1,56 @@
+extends layout
+block content
+    h2 Company Details
+    br
+    h3 Status
+    .row
+        if(user[0].stage==0)
+            .col Not yet a company profile.
+        if(user[0].stage==1)
+            .col Company profile has not been verified.
+        if(user[0].stage>=2)
+            .col Company profile has been verified.
+    br
+    h3 User Details
+    .row
+        .col Name: #{user[0].name}
+        .col Email: #{user[0].email}
+        .w-100
+        .col Username: #{user[0].username}
+    br
+
+    h3 Company Information
+    .row
+        .col Company Code: #{company[0].CompanyCode}
+        .col Company Group: #{company[0].CompanyGroup}
+        .w-100
+        .col Tax ID: #{company[0].TaxID}
+        .col Name Thai: #{company[0].NameThai}
+        .w-100
+        .col Name English: #{company[0].NameEnglish}
+        .col Business Type: #{company[0].BusinessType}
+    br
+    h3 Company Location
+    .row
+        .col Address: #{company[0].Address}
+        .col Building: #{company[0].Building}
+        .w-100
+        .col Soi: #{company[0].Soi}
+        .col Street: #{company[0].Street}
+        .w-100
+        .col Tumbol: #{company[0].Tumbol}
+        .col District: #{company[0].District}
+        .w-100
+        .col Province: #{company[0].Province}
+        .col Zip Code: #{company[0].ZipCode}
+    br
+    h3 Upload Company Document
+    .row
+        .col Company Document: #{company[0].CompanyDocument}
+    br
+    if(user[0].stage==1)
+        a.btn.btn-primary.approve-company(href='#',data-id=company[0]._id) Approve company details
+        a.btn.btn-danger(href='../', role='button') Cancel
+    else
+        a.btn.btn-secondary(href='../', role='button') Back
+    hr

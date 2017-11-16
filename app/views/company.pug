@@ -1,27 +1,48 @@
 extends layout
 block content
-  h2 Company Information
+  h2 Company Profile
   br
   table.table.table-bordered
     thead.thead(style='background-color: #101082; color: white;')
       tr
         th(scope='col') #
+        th(scope='col') Create By
         th(scope='col') Company Code
         th(scope='col') Company Group
         th(scope='col') Tax ID
         th(scope='col') Name Thai
         th(scope='col') Name English
         th(scope='col') Business Type
-        th(scope='col')
+        th(scope='clo') Status
+        th(scope='col') More Details
+        th(scope='col') Approve
 
     - for(var x=0;x<company.length;x++)
       tr
         td #{x+1}
+        -for(var y=0;y<user.length;y++)
+          if(company[x].Account==user[y]._id)
+            td #{user[y].name}
         td #{company[x].CompanyCode}
         td #{company[x].CompanyGroup}
         td #{company[x].TaxID}
         td #{company[x].NameThai}
         td #{company[x].NameEnglish}
         td #{company[x].BusinessType}
+        -for(var y=0;y<user.length;y++)
+          if(company[x].Account==user[y]._id)
+            if(user[y].stage==0)
+              td Not yet a company profile.
+            if(user[y].stage==1)
+              td Company profile has not been verified.
+            if(user[y].stage>=2)
+              td Company profile has been verified.
         td
-          a.btn.btn-primary(href='/companys/info/'+company[x]._id) Info
+          center
+            a.btn.btn-secondary(href='/companys/details/'+company[x]._id) More
+        td
+          center
+            -for(var y=0;y<user.length;y++)
+              if(company[x].Account==user[y]._id)
+                if(user[y].stage==1)
+                  a.btn.btn-primary.approve-company(href='#',data-id=company[x]._id) Submit

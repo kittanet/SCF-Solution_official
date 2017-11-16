@@ -1,18 +1,10 @@
 doctype html
 html(lang="eng")
     head
-        title SCF Solution
+        title SCF Solution Official
         link(rel='stylesheet' href='/css/bootstrap.min.css')
         link(rel='stylesheet' href='/css/style.css')
         link(rel='icon' href='images/favicon.ico')
-        style.
-            body {
-            background-image: url("/images/BBL.jpg");
-            background-repeat: no-repeat;
-            background-position: right bottom;
-            background-attachment: fixed;
-            background-size: 15% 15%;
-            }
     body
         nav.navbar.navbar-expand-md.navbar-dark.fixed-top(style='background-color: #101082;')
             a.navbar-brand(href='/') SCF Solution
@@ -20,18 +12,16 @@ html(lang="eng")
                 span.navbar-toggler-icon
             #navbarsExampleDefault.collapse.navbar-collapse
                 ul.navbar-nav.mr-auto
-                    li.nav-item.dropdown
-                        a#dropdown01.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Company
-                        .dropdown-menu(aria-labelledby='dropdown01')
-                            a.dropdown-item(href='/companys') Company Profile
-                    li.nav-item.dropdown
-                        a#dropdown02.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Invoice
-                        .dropdown-menu(aria-labelledby='dropdown02')
-                            a.dropdown-item(href='/invoices') Status Invoice
+                    li.nav-item
+                        a.nav-link(href='/companys') Company Profile
+                    li.nav-item
+                        a.nav-link(href='/invoices') Status Invoice
+                    li.nav-item
+                        a.nav-link(href='/messengers') Send Message                        
                 ul.nav.navbar-nav.navbar-right
                     li.nav-item
                         a.nav-link Official
-        .container
+        .container-fluid
             != messages('message', locals)
             if errors
                 each error, i in errors

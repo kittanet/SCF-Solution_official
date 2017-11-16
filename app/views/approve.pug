@@ -1,0 +1,92 @@
+extends layout
+block content
+    h2 Invoice Details
+    br
+    h3 Status
+    .row
+        if(invoice[0].Stage==0)
+            .col Not yet approved by Payee.
+        if(invoice[0].Stage==1)
+            .col Not yet approved by Bank.
+    br
+    h3 Invoice Details
+    .row
+        .col Voucher No: #{invoice[0].VoucherNo}
+        .col No of Transactions: #{invoice[0].NoofTransactions}
+        .w-100
+        .col Total Amount: #{invoice[0].TotalAmount}
+        .w-100
+        .col Confirm By: #{invoice[0].ConfirmBy}
+        .col Confirm Date: #{invoice[0].ConfirmDate}
+        .w-100
+        .col Payment Method: #{invoice[0].PaymentMethod}
+        if(invoice[0].PaymentMethod=='Cash')
+            .col Payer Account Number: #{invoice[0].PayerAccountNumber}
+        else
+            .col Loan Term: #{invoice[0].LoanTerm}
+        .w-100
+        .col Authorized by: #{invoice[0].Authorizer}
+    br
+    h3 Payer details
+    .row
+        - for(var y=0;y<user.length;y++)
+            if(invoice[0].AccountPayer==user[y]._id)
+                .col Name: #{user[y].name}
+                .col Email: #{user[y].email}
+        - for(var x=0;x<company.length;x++)
+            if(invoice[0].AccountPayer==company[x].Account)
+                .w-100
+                .col Company Code: #{company[x].CompanyCode}
+                .col Company Group: #{company[x].CompanyGroup}
+                .w-100
+                .col Tax ID: #{company[x].TaxID}
+                .col Name Thai: #{company[x].NameThai}
+                .w-100
+                .col Name English: #{company[x].NameEnglish}
+                .col Business Type: #{company[x].BusinessType}
+    br
+    h3 Payee details
+    .row
+        - for(var y=0;y<user.length;y++)
+            if(invoice[0].AccountPayee==user[y]._id)
+                .col Name: #{user[y].name}
+                .col Email: #{user[y].email}
+        - for(var x=0;x<company.length;x++)
+            if(invoice[0].AccountPayee==company[x].Account)
+                .w-100
+                .col Company Code: #{company[x].CompanyCode}
+                .col Company Group: #{company[x].CompanyGroup}
+                .w-100
+                .col Tax ID: #{company[x].TaxID}
+                .col Name Thai: #{company[x].NameThai}
+                .w-100
+                .col Name English: #{company[x].NameEnglish}
+                .col Business Type: #{company[x].BusinessType}
+    br
+    h3 Upload Invoice Document
+    .row
+        .col Invoice Document: #{invoice[0].InvoiceDocument}
+    br
+    h3 Ethereum Account
+    form(method='POST', action='/invoices/approve/'+invoice[0]._id)
+        #form-group
+            - for(var x=0;x<company.length;x++)
+                if(invoice[0].AccountPayer==company[x].Account)
+                    if(company[x].ETHAccount=='')
+                        label Payer Ethereum Account:
+                        input.form-control(name='PayerETHAccount', type='text')
+                    else
+                        p  Payer Ethereum Account: #{company[x].ETHAccount}
+            - for(var x=0;x<company.length;x++)
+                if(invoice[0].AccountPayee==company[x].Account)
+                    if(company[x].ETHAccount=='')
+                        label Payee Ethereum Account:
+                        input.form-control(name='PayeeETHAccount', type='text')
+                    else
+                        p  Payee Ethereum Account: #{company[x].ETHAccount}
+        br
+        if(invoice[0].Stage==1)
+            input.btn.btn-primary(type='submit',value='Approve company details') 
+            a.btn.btn-danger(href='../', role='button') Cancel
+        else
+            a.btn.btn-secondary(href='../', role='button') Back

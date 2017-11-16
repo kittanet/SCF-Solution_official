@@ -17,28 +17,19 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    $('.approve-invoice').on('click', function(e){
+    $('.approve-company').on('click', function(e){
         $target = $(e.target);
         const id = $target.attr('data-id');
         $.ajax({
             type:'GET',
-            url: '/invoices/approve/'+id,
+            url: '/companys/approve/'+id,
             success: function(response){
-                alert('Approve Invoice');
-                window.location.href='/invoices/approve';
+                alert('Company Invoice');
+                window.location.href='/companys';
             },
             error: function(err){
                 console.log(err);
             }
         });
-    });
-});
-
-$(document).ready(function(){
-    $('input[type="radio"]').click(function(){
-        var inputValue = $(this).attr("value");
-        var targetBox = $("." + inputValue);
-        $(".box").not(targetBox).hide();
-        $(targetBox).show();
     });
 });

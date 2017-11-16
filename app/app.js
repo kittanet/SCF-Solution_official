@@ -64,6 +64,7 @@ app.get('/', function (req, res) {
 // router files
 app.use('/companys', require('./routers/companys'));
 app.use('/invoices', require('./routers/invoices'));
+app.use('/messengers', require('./routers/messengers'));
 
 // Start Server
 app.listen(1000, function(){

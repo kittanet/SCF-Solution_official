@@ -1,0 +1,19 @@
+extends layout
+block content
+    h2 Send Message
+    br
+    table.table.table-bordered
+        thead.thead(style='background-color: #101082; color: white;')
+            tr
+                th(scope='col') #
+                th(scope='col') Name
+                th(scope='col') Message
+                th(scope='col') Send Message
+        - for(var x=0;x<user.length;x++)
+            tr
+                td #{x+1}
+                td #{user[x].name}
+                td #{user[x].message}
+                td
+                    center
+                        a.btn.btn-primary(href='/messengers/add/'+user[x]._id) Send

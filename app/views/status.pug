@@ -1,6 +1,6 @@
 extends layout
 block content
-  h2 Status Invoice Detail
+  h2 Status Invoice Details
   br
   table.table.table-bordered
     thead.thead(style='background-color: #101082; color: white;')
@@ -16,8 +16,9 @@ block content
         th(scope='col') Payer Account Number
         th(scope='col') Loan Term
         th(scope='col') Maturity Date
-        th(scope='col') Authorizer
+        th(scope='col') Authorized by
         th(scope='col') Status
+        th(scope='col') More Invoice Details
 
     - for(var x=0;x<invoice.length;x++)
       tr
@@ -34,6 +35,12 @@ block content
         td #{invoice[x].MaturityDate}
         td #{invoice[x].Authorizer}
           if(invoice[x].Stage==0)
-            td Not yet approved by Payee
+            td Not yet approved by Payee.
           if(invoice[x].Stage==1)
-            td Not yet approved by Bank
+            td Not yet approved by Bank.
+          if(invoice[x].Stage==2)
+            td Verified invoice by Bank.
+        td
+          if(invoice[x].Stage>=1)
+            center
+              a.btn.btn-secondary(href='/invoices/approve/'+invoice[x]._id, role='button') More 

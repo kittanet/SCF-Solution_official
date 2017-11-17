@@ -1,6 +1,7 @@
 extends layout
 block content
-    h2 Send Message
+    center
+        h2 Send Message
     p Name: #{user[0].name}
     if(user[0].message)
         p Previous message: #{user[0].message}
@@ -9,5 +10,6 @@ block content
             label Message:
             textarea.form-control(name='message')
         br
-        input.btn.btn-primary(type='submit',value='Submit')
-        a.btn.btn-secondary(href='../', role='button') Back
+        center
+            input.btn.btn-primary(type='submit',value='Submit')
+            a.btn.btn-secondary(href='../', role='button') Back

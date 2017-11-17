@@ -1,5 +1,31 @@
 extends layout
 block content
-    h2 Main program
-    br
-    br
+    center
+        h2 Welcome to the Supply Chain Finance Solution.
+        br
+        - var temp=0;
+        - for(var x=0;x<user.length;x++)
+            if(user[x].stage==1)
+                - var temp = 1;
+        - for(var x=0;x<invoice.length;x++)
+            if(invoice[x].Stage==1)
+                - var temp = 1;
+        if(temp)
+            .message.warning
+                strong Alert Message!
+                - for(var x=0;x<user.length;x++)
+                    if(user[x].stage==1)
+                        br
+                        |  #{user[x].name} added company information. Waiting for confirmation from Official. 
+                        strong
+                            a(href='/companys') Click
+                - for(var x=0;x<invoice.length;x++)
+                    if(invoice[x].Stage==1)
+                        - for(var y=0;y<user.length;y++)
+                            if(invoice[x].AccountPayer==user[y]._id)
+                                - for(var z=0;z<user.length;z++)
+                                    if(invoice[x].AccountPayee==user[z]._id)
+                                        br
+                                        |  Invoice #{user[y].name}'s payer and #{user[z].name}'s payee. Waiting for confirmation from Official.
+                                        strong
+                                            a(href='/invoices') Click

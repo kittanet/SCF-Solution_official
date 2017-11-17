@@ -65,6 +65,7 @@ router.post('/approve/:id', function(req, res){
 
   let invoiceID = req.params.id;
   Invoice.findById(invoiceID,function(err,invoice){
+    if(invoice.LoanTerm){
     var Dueday = new Date();
     Dueday.setDate(Dueday.getDate()+invoice.LoanTerm);
     var dd = Dueday.getDate();
@@ -83,9 +84,9 @@ router.post('/approve/:id', function(req, res){
         return;
       }
     });
+    }
   });
 
-//  PayeeETHAccount = req.body.PayeeETHAccount;
   Invoice.findByIdAndUpdate(invoiceID, { $set:{ EffectiveDate:today } }, function(err,invoice){
     let payerID = invoice.AccountPayer;
     let payeeID = invoice.AccountPayee;

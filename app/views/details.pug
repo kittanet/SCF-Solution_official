@@ -1,6 +1,7 @@
 extends layout
 block content
-    h2 Company Details
+    center
+        h2 Company Details
     br
     h3 Status
     .row
@@ -48,9 +49,9 @@ block content
     .row
         .col Company Document: #{company[0].CompanyDocument}
     br
-    if(user[0].stage==1)
-        a.btn.btn-primary.approve-company(href='#',data-id=company[0]._id) Approve company details
-        a.btn.btn-danger(href='../', role='button') Cancel
-    else
-        a.btn.btn-secondary(href='../', role='button') Back
-    hr
+    center
+        if(user[0].stage==1)
+            a.btn.btn-primary.approve-company(href='#',data-id=company[0]._id) Approve company details
+            a.btn.btn-danger(href='../', role='button') Cancel
+        else
+            a.btn.btn-secondary(href='../', role='button') Back

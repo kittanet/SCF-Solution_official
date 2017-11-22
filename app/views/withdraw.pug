@@ -1,9 +1,9 @@
 extends layout
 block content
     center
-        h2 Deposit Token
+        h2 Withdraw Token
     br
-    form(method='POST', action='/wallets/deposit')
+    form(method='POST', action='/wallets/withdraw')
         #form-group
             label(for='Select1') To Account:
             select#Select1.form-control(name='NameEnglish')

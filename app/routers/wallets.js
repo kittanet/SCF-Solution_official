@@ -37,32 +37,80 @@ router.get('/', function (req, res) {
     });
 });
 
+router.get('/withdraw', function (req, res) {
+    Company.find({}, function(err, company){
+        res.render('withdraw',{
+            company:company
+        });
+    });
+});
+
+router.post('/withdraw', function(req, res) {
+    if(req.body.NameEnglish=='Bangkok Bank'){
+        var from = accounts[0];
+        var txref = req.body.txref;
+        var amount = req.body.amount;
+        token.withdraw(txref, amount, {
+            from: from
+        }).then(function (v){
+            req.flash('success', 'Withdraw Complete');
+            res.redirect('/wallets');
+        }).catch(function (err){
+            res.send(err);
+        });
+    } else {
+        Company.find({ "NameEnglish":req.body.NameEnglish }, function(err, company){
+            var from = company[0].ETHAccount;
+            var txref = req.body.txref;
+            var amount = req.body.amount;
+            token.withdraw(txref, amount, {
+                from: from
+            }).then(function (v){
+                req.flash('success', 'Withdraw Complete');
+                res.redirect('/wallets');
+            }).catch(function (err){
+                res.send(err);
+            });
+        });
+    }
+});
+
 router.get('/deposit', function (req, res) {
-    var addr = accounts[0];
-    var balance = {};
-    var eth_balance = web3.eth.getBalance(addr);
-    balance.eth = web3.fromWei(eth_balance, 'ether').toString(10);
-    // get token balance
-    token.balanceOf.call(addr).then(function (b) {
-        balance.token = b.toNumber();
-        res.render('deposit', {
-            balance:balance
+    Company.find({}, function(err, company){
+        res.render('deposit',{
+            company:company
         });
     });
 });
 
 router.post('/deposit', function(req, res) {
-    var from = accounts[0];
-    var txref = req.body.txref;
-    var amount = req.body.amount;
-    token.deposit(txref, amount, {
-        from: from
-    }).then(function (v){
-        req.flash('success', 'Deposit Complete');
-        res.redirect('/wallets');
-    }).catch(function (err){
-        res.send(err);
-    });
+    if(req.body.NameEnglish=='Bangkok Bank'){
+        var from = accounts[0];
+        var txref = req.body.txref;
+        var amount = req.body.amount;
+        token.deposit(txref, amount, {
+            from: from
+        }).then(function (v){
+            req.flash('success', 'Deposit Complete');
+            res.redirect('/wallets');
+        }).catch(function (err){
+            res.send(err);
+        });
+    } else {
+        Company.find({ "NameEnglish":req.body.NameEnglish }, function(err, company){
+            var from = company[0].ETHAccount;
+            var txref = req.body.txref;
+            var amount = req.body.amount;
+            token.deposit(txref, amount, {
+                from: from
+            }).then(function (v){
+                req.flash('success', 'Deposit Complete');
+                res.redirect('/wallets');
+            }).catch(function (err){
+                res.send(err);
+            });
+        });
+    }
 });
 
 router.get('/transfer', function (req, res) {

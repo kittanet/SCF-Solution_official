@@ -8,7 +8,7 @@ block content
             if(user[x].stage==1)
                 - var temp = 1;
         - for(var x=0;x<invoice.length;x++)
-            if(invoice[x].Stage==1)
+            if(invoice[x].Stage==1||invoice[x].Stage==2)
                 - var temp = 1;
         if(temp)
             .message.warning
@@ -26,6 +26,19 @@ block content
                                 - for(var z=0;z<user.length;z++)
                                     if(invoice[x].AccountPayee==user[z]._id)
                                         br
-                                        |  Invoice #{user[y].name}'s payer and #{user[z].name}'s payee. Waiting for confirmation from Official.
+                                        |  Invoice #{user[y].name}'s payer and #{user[z].name}'s payee.
+                                        br
+                                        |  Waiting for confirmation from Official.
                                         strong
                                             a(href='/invoices') Click
+                    if(invoice[x].Stage==2)
+                        - for(var y=0;y<user.length;y++)
+                            if(invoice[x].AccountPayer==user[y]._id)
+                                - for(var z=0;z<user.length;z++)
+                                    if(invoice[x].AccountPayee==user[z]._id)
+                                        br
+                                        |  Invoice #{user[y].name}'s payer and #{user[z].name}'s payee.
+                                        br
+                                        |  Waiting for the Payer to payment the Bank.
+                                        strong
+                                            a(href='/wallets/transfer') Click

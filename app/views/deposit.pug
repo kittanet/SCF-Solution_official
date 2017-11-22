@@ -1,0 +1,17 @@
+extends layout
+block content
+    center
+        h2 Deposit Token
+    br
+    p Current Balance ETH:	#{balance.eth} Ether 
+    p Current Balance Token: #{balance.token} BBL
+    form(method='POST', action='/wallets/deposit')
+        #form-group
+            label Amount:
+            input.form-control(name='amount', type='text')
+            label Text Reference:
+            textarea.form-control(name='txref')
+        br
+        center
+            input.btn.btn-primary(type='submit',value='Submit')
+            a.btn.btn-secondary(href='../', role='button') Back

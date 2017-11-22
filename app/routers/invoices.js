@@ -83,27 +83,10 @@ router.post('/approve/:id', function(req, res){
         console.log(err);
         return;
       }
+      req.flash('success', 'Verified invoice');
+      res.redirect('/invoices');
     });
     }
-  });
-
-  Invoice.findByIdAndUpdate(invoiceID, { $set:{ EffectiveDate:today } }, function(err,invoice){
-    let payerID = invoice.AccountPayer;
-    let payeeID = invoice.AccountPayee;
-    Company.findOneAndUpdate({ "Account": payerID }, { $set:{ ETHAccount:req.body.PayerETHAccount } }, function(err, invoice){
-          if(err){
-            console.log(err);
-            return;
-          }
-          Company.findOneAndUpdate({ "Account": payeeID }, { $set:{ ETHAccount:req.body.PayeeETHAccount } }, function(err, invoice){
-            if(err){
-              console.log(err);
-              return;
-            }
-            req.flash('success', 'Verified invoice');
-            res.redirect('/invoices');
-          });
-        });
   });
 });
 

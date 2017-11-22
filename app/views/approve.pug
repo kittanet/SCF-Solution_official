@@ -73,23 +73,15 @@ block content
     br
     h3 Ethereum Account
     form(method='POST', action='/invoices/approve/'+invoice[0]._id)
-        #form-group
+        .row
             - for(var x=0;x<company.length;x++)
-                if(invoice[0].AccountPayer==company[x].Account)
-                    if(company[x].ETHAccount=='')
-                        label Payer Ethereum Account:
-                        input.form-control(name='PayerETHAccount', type='text')
-                    else
-                        label Payer Ethereum Account:
-                        input.form-control(name='PayerETHAccount', type='text', value=company[x].ETHAccount)
+                    if(invoice[0].AccountPayer==company[x].Account)
+                        .col Payer Ethereum Account: 
+                            a(href='/wallets/account/'+company[x].ETHAccount) #{company[x].ETHAccount}
             - for(var x=0;x<company.length;x++)
-                if(invoice[0].AccountPayee==company[x].Account)
-                    if(company[x].ETHAccount=='')
-                        label Payee Ethereum Account:
-                        input.form-control(name='PayeeETHAccount', type='text')
-                    else
-                        label Payee Ethereum Account:
-                        input.form-control(name='PayeeETHAccount', type='text', value=company[x].ETHAccount)
+                    if(invoice[0].AccountPayee==company[x].Account)
+                        .col Payee Ethereum Account: 
+                            a(href='/wallets/account/'+company[x].ETHAccount) #{company[x].ETHAccount}
         br
         center
             if(invoice[0].Stage==1)

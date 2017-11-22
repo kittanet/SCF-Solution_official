@@ -1,0 +1,21 @@
+extends layout
+block content
+    center
+        h2 Account ETH
+    br
+    table.table.table-bordered
+        thead.thead(style='background-color: #101082; color: white;')
+            tr
+                th(scope='col') Company Code
+                th(scope='col') Company Name
+                th(scope='col') Account
+
+        - for(var x=0;x<company.length;x++)
+            tr
+                td #{company[x].CompanyCode}
+                td
+                    a(href='../companys/details/'+company[x]._id) #{company[x].NameEnglish}
+                - for(var y=0;y<accounts.length;y++)
+                    if(company[x].ETHAccount==accounts[y])
+                        td
+                            a(href='/wallets/account/'+accounts[y]) #{accounts[y]}

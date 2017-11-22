@@ -40,6 +40,17 @@ router.get('/', function (req, res) {
 router.get('/withdraw', function (req, res) {
     Company.find({}, function(err, company){
         res.render('withdraw',{
+            flag:0,
+            company:company
+        });
+    });
+});
+
+router.get('/withdraw/:id', function (req, res) {
+    var id = req.params.id;
+    Company.find({"ETHAccount":id}, function(err, company){
+        res.render('withdraw',{
+            flag:1,
             company:company
         });
     });
@@ -47,29 +58,53 @@ router.get('/withdraw', function (req, res) {
 
 router.post('/withdraw', function(req, res) {
     if(req.body.NameEnglish=='Bangkok Bank'){
-        var from = accounts[0];
-        var txref = req.body.txref;
-        var amount = req.body.amount;
-        token.withdraw(txref, amount, {
-            from: from
-        }).then(function (v){
-            req.flash('success', 'Withdraw Complete');
-            res.redirect('/wallets');
-        }).catch(function (err){
-            res.send(err);
+        var balance = {};
+        var eth_balance = web3.eth.getBalance(accounts[0]);
+        balance.eth = web3.fromWei(eth_balance, 'ether').toString(10);
+        // get token balance
+        token.balanceOf.call(accounts[0]).then(function (b) {
+            balance.token = b.toNumber();
+            if(req.body.amount<=balance.token){
+                var from = accounts[0];
+                var txref = req.body.txref;
+                var amount = req.body.amount;
+                token.withdraw(txref, amount, {
+                    from: from
+                }).then(function (v){
+                    req.flash('success', 'Withdraw Complete');
+                    res.redirect('/wallets');
+                }).catch(function (err){
+                    res.send(err);
+                });
+            } else {
+                req.flash('danger', 'Your token too low.');
+                res.redirect('/wallets/withdraw');
+            }
         });
     } else {
         Company.find({ "NameEnglish":req.body.NameEnglish }, function(err, company){
-            var from = company[0].ETHAccount;
-            var txref = req.body.txref;
-            var amount = req.body.amount;
-            token.withdraw(txref, amount, {
-                from: from
-            }).then(function (v){
-                req.flash('success', 'Withdraw Complete');
-                res.redirect('/wallets');
-            }).catch(function (err){
-                res.send(err);
+            var balance = {};
+            var eth_balance = web3.eth.getBalance(company[0].ETHAccount);
+            balance.eth = web3.fromWei(eth_balance, 'ether').toString(10);
+            // get token balance
+            token.balanceOf.call(company[0].ETHAccount).then(function (b) {
+                balance.token = b.toNumber();
+                if(req.body.amount<=balance.token){
+                    var from = company[0].ETHAccount;
+                    var txref = req.body.txref;
+                    var amount = req.body.amount;
+                    token.withdraw(txref, amount, {
+                        from: from
+                    }).then(function (v){
+                        req.flash('success', 'Withdraw Complete');
+                        res.redirect('/wallets');
+                    }).catch(function (err){
+                        res.send(err);
+                    });
+                } else {
+                    req.flash('danger', 'Your token too low.');
+                    res.redirect('/wallets/withdraw');
+                }
             });
         });
     }
@@ -78,10 +113,22 @@ router.post('/withdraw', function(req, res) {
 router.get('/deposit', function (req, res) {
     Company.find({}, function(err, company){
         res.render('deposit',{
+            flag:0,
             company:company
         });
     });
 });
+
+router.get('/deposit/:id', function (req, res) {
+    var id = req.params.id;
+    Company.find({"ETHAccount":id}, function(err, company){
+        res.render('deposit',{
+            flag:1,
+            company:company
+        });
+    });
+});
+
 
 router.post('/deposit', function(req, res) {
     if(req.body.NameEnglish=='Bangkok Bank'){

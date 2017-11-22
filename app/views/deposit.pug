@@ -7,7 +7,8 @@ block content
         #form-group
             label(for='Select1') To Account:
             select#Select1.form-control(name='NameEnglish')
-                option Bangkok Bank
+                if(flag==0)
+                    option Bangkok Bank
                 - for(var x=0;x<company.length;x++)
                         option #{company[x].NameEnglish}
             label Amount:

@@ -10,4 +10,6 @@ block content
         h4 Balance ETH:	#{balance.eth} Ether 
         h4 Balance Token: #{balance.token} BBL
         br
+        a.btn.btn-primary(href='/wallets/deposit/'+accounts, role='button') Deposit
+        a.btn.btn-danger(href='/wallets/withdraw/'+accounts, role='button') Withdraw
         a.btn.btn-secondary(href='/wallets/account', role='button') Back

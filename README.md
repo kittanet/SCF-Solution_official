@@ -29,7 +29,7 @@ $ truffle migrate
 ```
 
 ```sh
-$ npm start
+$ nodemon
 ```
 
 ## Tests

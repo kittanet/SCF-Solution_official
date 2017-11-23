@@ -69,7 +69,8 @@ block content
     br
     h3 Upload Invoice Document
     .row
-        .col Invoice Document: #{invoice[0].InvoiceDocument}
+        .col Invoice Document:
+            a(href='#') #{invoice[0].InvoiceDocument}
     br
     h3 Ethereum Account
     form(method='POST', action='/invoices/approve/'+invoice[0]._id)

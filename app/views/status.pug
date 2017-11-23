@@ -18,9 +18,9 @@ block content
         th(scope='col') Loan Term
         th(scope='col') Maturity Date
         th(scope='col') Authorized by
+        th(scope='col') Invoice Document
         th(scope='col') Status
         th(scope='col') More Invoice Details
-
     - for(var x=0;x<invoice.length;x++)
       tr
         td #{x+1}
@@ -35,16 +35,18 @@ block content
         td #{invoice[x].LoanTerm}
         td #{invoice[x].MaturityDate}
         td #{invoice[x].Authorizer}
-          if(invoice[x].Stage==0)
-            td Not yet approved by Payee.
-          if(invoice[x].Stage==1)
-            td Not yet approved by Bank.
-          if(invoice[x].Stage==2)
-            td Waiting funds early payment to the Payee.
-          if(invoice[x].Stage==3)
-            td Waiting for the Payer to payment the Bank.
-          if(invoice[x].Stage==4)
-            td Complete invoice.
+        td
+          a(href='#') #{invoice[x].InvoiceDocument}
+        if(invoice[x].Stage==0)
+          td Not yet approved by Payee.
+        if(invoice[x].Stage==1)
+          td Not yet approved by Bank.
+        if(invoice[x].Stage==2)
+          td Waiting funds early payment to the Payee.
+        if(invoice[x].Stage==3)
+          td Waiting for the Payer to payment the Bank.
+        if(invoice[x].Stage==4)
+          td Complete invoice.
         td
           if(invoice[x].Stage>=1)
             center

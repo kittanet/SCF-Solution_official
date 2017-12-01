@@ -9,6 +9,16 @@ block content
             .col Not yet approved by Payee.
         if(invoice[0].Stage==1)
             .col Not yet approved by Bank.
+        if(invoice[0].Stage==2)
+            .col Waiting funds early payment to the Payee.
+        if(invoice[0].Stage==3)
+            .col Waiting for the Payer to payment the Bank.
+        if(invoice[0].Stage==4)
+            .col Complete invoice.
+        if(invoice[0].Stage==-1)
+            .col Invoice is rejected by the Payee.
+        if(invoice[0].Stage==-2)
+            .col Invoice is rejected by the Bank.
     br
     h3 Invoice Details
     .row
@@ -72,7 +82,7 @@ block content
     h3 Upload Invoice Document
     .row
         .col Invoice Document:
-            a(href='#') #{invoice[0].InvoiceDocument}
+            a(href='/uploads/invoices/'+invoice[0].InvoiceDocument) #{invoice[0].InvoiceDocument}
     br
     h3 Ethereum Account
     form(method='POST', action='/invoices/approve/'+invoice[0]._id)
@@ -88,7 +98,8 @@ block content
         br
         center
             if(invoice[0].Stage==1)
-                input.btn.btn-primary(type='submit',value='Approve company details') 
-                a.btn.btn-danger(href='../', role='button') Cancel
+                input.btn.btn-primary(type='submit',value='Approve Invoice') 
+                a.btn.btn-danger.reject-invoice(href='#',data-id=invoice[0]._id) Reject Invoice
+                a.btn.btn-secondary(href='../', role='button') Back
             else
                 a.btn.btn-secondary(href='../', role='button') Back

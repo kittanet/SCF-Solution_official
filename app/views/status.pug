@@ -38,7 +38,7 @@ block content
         td #{invoice[x].MaturityDate}
         td #{invoice[x].Authorizer}
         td
-          a(href='#') #{invoice[x].InvoiceDocument}
+          a(href='/uploads/invoices/'+invoice[x].InvoiceDocument) #{invoice[x].InvoiceDocument}
         if(invoice[x].Stage==0)
           td Not yet approved by Payee.
         if(invoice[x].Stage==1)
@@ -49,7 +49,11 @@ block content
           td Waiting for the Payer to payment the Bank.
         if(invoice[x].Stage==4)
           td Complete invoice.
+        if(invoice[x].Stage==-1)
+          td Invoice is rejected by the Payee.
+        if(invoice[x].Stage==-2)
+          td Invoice is rejected by the Bank.
         td
-          if(invoice[x].Stage>=1)
-            center
-              a.btn.btn-secondary(href='/invoices/approve/'+invoice[x]._id, role='button') More 
+          center
+            a.btn.btn-secondary(href='/invoices/approve/'+invoice[x]._id, role='button') More
+  font(size='2', color='red') * Confirm By = Payer, Authorized by = Payee

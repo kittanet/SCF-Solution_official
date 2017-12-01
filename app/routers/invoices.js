@@ -82,6 +82,7 @@ router.post('/approve/:id', function(req, res) {
    var Dueday = dd + '/' + mm + '/' + yyyy;
    Invoice.findByIdAndUpdate(invoiceID, {
     $set: {
+     EffectiveDate: today,
      MaturityDate: Dueday,
      Stage: 2
     }
@@ -94,6 +95,24 @@ router.post('/approve/:id', function(req, res) {
     res.redirect('/invoices');
    });
   }
+ });
+});
+
+// reject invoice
+router.delete('/:id', function(req, res) {
+ let query = {
+  _id: req.params.id
+ }
+ Invoice.findByIdAndUpdate(query, {
+  $set: {
+   Stage: -2,
+  }
+ }, function(err, invoice) {
+  if (err) {
+   console.log(err);
+   return;
+  }
+  res.send('Success');
  });
 });
 

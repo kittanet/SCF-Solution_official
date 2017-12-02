@@ -47,7 +47,13 @@ block content
     br
     h3 Upload Company Document
     .row
-        .col Company Document: #{company[0].CompanyDocument}
+        .col Company Document: 
+            a(href='/uploads/companys/'+company[0].CompanyDocument) #{company[0].CompanyDocument}
+    br
+    h3 Ethereum Account
+    .row
+      .col Ethereum Account:
+        a(href='/wallets/account/'+company[0].ETHAccount) #{company[0].ETHAccount}
     br
     center
         if(user[0].stage==1)

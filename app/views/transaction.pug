@@ -1,0 +1,32 @@
+extends layout
+block content
+    center
+        h2 Transaction
+    br
+    table.table.table-bordered
+        thead.thead(style='background-color: #101082; color: white;')
+            tr
+                th(scope='col') #
+                th(scope='col') TxHash
+                th(scope='col') Timestamp
+                th(scope='col') From
+                th(scope='col') To
+                th(scope='col') Quantity
+
+        - for(var x=tansaction.length-1,y=1;x>=0;x--,y++)
+            tr
+                td #{y}
+                td
+                    a(href='#') #{tansaction[x].TxHash}
+                td #{tansaction[x].Timestamp}
+                td
+                    if(accounts[0]==tansaction[x].From)
+                        a(href='/wallets') #{tansaction[x].From}
+                    else
+                        a(href='/wallets/account/'+tansaction[x].From) #{tansaction[x].From}
+                td
+                    if(accounts[0]==tansaction[x].To)
+                        a(href='/wallets') #{tansaction[x].To}
+                    else
+                        a(href='/wallets/account/'+tansaction[x].To) #{tansaction[x].To}
+                td #{tansaction[x].Quantity}

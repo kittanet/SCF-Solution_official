@@ -94,6 +94,20 @@ router.post('/approve/:id', function(req, res) {
     req.flash('success', 'Verified invoice');
     res.redirect('/invoices');
    });
+  } else {
+    Invoice.findByIdAndUpdate(invoiceID, {
+        $set: {
+         EffectiveDate: today,
+         Stage: 2
+        }
+       }, function(err, invoice) {
+        if (err) {
+         console.log(err);
+         return;
+        }
+        req.flash('success', 'Verified invoice');
+        res.redirect('/invoices');
+       });
   }
  });
 });
